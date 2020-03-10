@@ -8,3 +8,4 @@ Notes and code for the [fast.ai course](https://course.fast.ai/).
 * [docs](https://docs.fast.ai/)
 * [pytorch](https://pytorch.org/)
 * [fast.ai datasets](https://course.fast.ai/datasets)
+* [GCP Instance](https://console.cloud.google.com/compute/instances?folder=&organizationId=&project=fast-ai-test-252221)
