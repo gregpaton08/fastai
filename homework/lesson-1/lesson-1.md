@@ -4,8 +4,6 @@
 * Create your own [image set](https://forums.fast.ai/t/tips-for-building-large-image-datasets/26688).
 * Create your own classifier using the Jupyter notebook and the image set you created.
 
-## Notes
-
 ## Creating Your Own Data Set
 
 After a lot of searching and trial-and-error I used [this image scraper script](https://github.com/ultralytics/google-images-download) to pull images from Bing.
@@ -23,3 +21,24 @@ Unfortunately all 368 could not be downloaded because some images were not downl
 Done with 35 errors in 447.9s. All images saved to /Users/gpaton/code/ultralytics-google-images-download/images
 ```
 
+## Creating and Connecting to a GCP Instance
+
+Preemption was taking down my instance every few minutes, so I opted for the budget instance and removed the `--preemptible` flag. Will need to monitor costs to see how bad it is.
+
+Once connected via ssh runs these commands to update the repo.
+
+```bash
+cd tutorials/fastai/course-v3
+git checkout .
+git pull
+```
+
+You should also update the fastai library.
+
+```bash
+sudo conda install -y -c fastai fastai
+```
+
+Then you can access the jupyter notebook in a web browser.
+
+[http://localhost:8080/tree/tutorials/fastai/course-v3/nbs/dl1](http://localhost:8080/tree/tutorials/fastai/course-v3/nbs/dl1)
