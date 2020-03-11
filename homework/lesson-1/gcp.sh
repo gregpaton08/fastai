@@ -6,12 +6,22 @@
 #
 ##########
 
+# Notes
+#
+# To view instances:
+#   gcloud compute instances list
+#
+
 set -e
 
 export IMAGE_FAMILY="pytorch-latest-gpu" # or "pytorch-latest-cpu" for non-GPU instances
-export ZONE="us-west1-b"
+# export ZONE="us-west1-b"
 # export ZONE="us-west2-b"
-export INSTANCE_NAME="my-fastai-instance-budget"
+# export ZONE="us-central1-a"
+export ZONE="us-central1-c"
+# export ZONE="us-east1-b"
+# export INSTANCE_NAME="my-fastai-instance-budget"
+export INSTANCE_NAME="my-fastai-instance-budget-$ZONE"
 # export INSTANCE_TYPE="n1-highmem-8"
 # budget:
 export INSTANCE_TYPE="n1-highmem-4"
@@ -28,6 +38,8 @@ function create_gcp_instance {
     # --accelerator="type=nvidia-tesla-p100,count=1" \
     # budget:
     # --accelerator="type=nvidia-tesla-k80,count=1" \
+    # to make preemptible add:
+    # --preemptible
     gcloud compute instances create $INSTANCE_NAME \
             --zone=$ZONE \
             --image-family=$IMAGE_FAMILY \
@@ -36,13 +48,13 @@ function create_gcp_instance {
             --accelerator="type=nvidia-tesla-k80,count=1" \
             --machine-type=$INSTANCE_TYPE \
             --boot-disk-size=200GB \
-            --metadata="install-nvidia-driver=True" \
-            --preemptible
+            --metadata="install-nvidia-driver=True"
 }
 
 function connect_to_gcp_instance {
     echo "connecting to google cloud platform instance..."
-    gcloud compute ssh --zone=$ZONE jupyter@$INSTANCE_NAME -- -L 8080:localhost:8080
+    gcloud compute ssh jupyter@$INSTANCE_NAME -- -L 8080:localhost:8080
+    # gcloud compute ssh --zone=$ZONE jupyter@$INSTANCE_NAME -- -L 8080:localhost:8080
 }
 
 for i in "$@"
@@ -54,7 +66,7 @@ case $i in
         usage
     fi
     action=connect_to_gcp_instance
-    shift # past argument=value
+    shift
     ;;
     create)
     if [ ! -z $action ]; then
@@ -62,7 +74,7 @@ case $i in
         usage
     fi
     action=create_gcp_instance
-    shift # past argument=value
+    shift
     ;;
     *)
     echo "invalid arguments"
