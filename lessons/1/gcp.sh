@@ -57,23 +57,41 @@ function connect_to_gcp_instance {
     # gcloud compute ssh --zone=$ZONE jupyter@$INSTANCE_NAME -- -L 8080:localhost:8080
 }
 
+function start_gcp_instance {
+    echo "starting google cloud platform instance..."
+    gcloud compute instances start $INSTANCE_NAME
+}
+
+function stop_gcp_instance {
+    echo "stopping google cloud platform instance..."
+    gcloud compute instances stop $INSTANCE_NAME
+}
+
+function set_action {
+    if [ ! -z $action ]; then
+        echo "invalid arguments"
+        usage
+    fi
+    action=$1
+}
+
 for i in "$@"
 do
 case $i in
     connect)
-    if [ ! -z $action ]; then
-        echo "invalid arguments"
-        usage
-    fi
-    action=connect_to_gcp_instance
+    set_action connect_to_gcp_instance
     shift
     ;;
     create)
-    if [ ! -z $action ]; then
-        echo "invalid arguments"
-        usage
-    fi
-    action=create_gcp_instance
+    set_action create_gcp_instance
+    shift
+    ;;
+    start)
+    set_action start_gcp_instance
+    shift
+    ;;
+    stop)
+    set_action stop_gcp_instance
     shift
     ;;
     *)
