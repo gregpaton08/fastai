@@ -21,6 +21,23 @@ Unfortunately all 368 could not be downloaded because some images were not downl
 Done with 35 errors in 447.9s. All images saved to /Users/gpaton/code/ultralytics-google-images-download/images
 ```
 
+Organize the data ["Imagenet-style"](https://docs.fast.ai/vision.data.html#ImageDataBunch.from_folder)
+```
+path/
+    train/
+        no/
+        yes/
+    valid/
+        no/
+        yes/
+```
+
+Then tar it up
+```bash
+cd /Users/gpaton/Google\ Drive/fastai/datasets/is_it_murphy/
+tar --exclude=".*" -cvzf is_it_murphy.tgz imagenet-style
+```
+
 ## Creating and Connecting to a GCP Instance
 
 Preemption was taking down my instance every few minutes, so I opted for the budget instance and removed the `--preemptible` flag. Will need to monitor costs to see how bad it is.
