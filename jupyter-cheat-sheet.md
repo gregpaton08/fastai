@@ -45,3 +45,8 @@
 `doc(function-name)`: Shows the definition, docstring **and links to the documentation** of the function
 (only works with fastai library imported)
 
+`!some-command`: Runs a command on the underlying system.
+```bash
+!ls /home/gregpaton08
+is_it_murphy.tgz
+```
